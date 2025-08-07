@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoMecânica Master - Sistema de Serviços</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .photo-upload {
+            border: 2px dashed #ccc;
+            transition: all 0.3s;
+        }
+        .photo-upload:hover {
+            border-color: #3b82f6;
+            background-color: #f8fafc;
+        }
+        .photo-preview {
+            height: 120px;
+            object-fit: cover;
+        }
+        .section-divider {
+            position: relative;
+            margin: 2rem 0;
+        }
+        .section-divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #64748b, transparent);
+        }
+        .section-divider span {
+            position: relative;
+            padding: 0 1rem;
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <header class="mb-10 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-car-side text-blue-600 text-4xl mr-3"></i>
+                <h1 class="text-3xl font-bold text-gray-800">TwoSystem</h1>
+            </div>
+            <p class="text-gray-600">Sistema de registro de serviços automotivos</p>
+        </header>
+
+        <!-- Main Form -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Form Progress -->
+            <div class="bg-gray-100 px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center mr-2">
+                            1
+                        </div>
+                        <span class="font-medium text-gray-700">Cliente</span>
+                    </div>
+                    <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center mr-2">
+                            2
+                        </div>
+                        <span class="text-gray-500">Veículo</span>
+                    </div>
+                    <div class="h-1 flex-1 bg-gray-300 mx-2"></div>
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-600 flex items-center justify-center mr-2">
+                            3
+                        </div>
+                        <span class="text-gray-500">Serviço</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <form id="serviceForm" class="p-6">
+                <!-- Customer Section -->
+                <section id="customer-section">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-user mr-2 text-blue-600"></i> Dados do Cliente
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="customerName" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo*</label>
+                            <input type="text" id="customerName" name="customerName" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="customerCPF" class="block text-sm font-medium text-gray-700 mb-1">CPF*</label>
+                            <input type="text" id="customerCPF" name="customerCPF" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="000.000.000-00">
+                        </div>
+                        <div>
+                            <label for="customerPhone" class="block text-sm font-medium text-gray-700 mb-1">Telefone*</label>
+                            <input type="tel" id="customerPhone" name="customerPhone" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="(00) 00000-0000">
+                        </div>
+                        <div>
+                            <label for="customerEmail" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                            <input type="email" id="customerEmail" name="customerEmail" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="customerAddress" class="block text-sm font-medium text-gray-700 mb-1">Endereço*</label>
+                            <input type="text" id="customerAddress" name="customerAddress" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        
+                    </div>
+                </section>
+
+                
+
+                <!-- Vehicle Section -->
+                <section id="vehicle-section" class="hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-car mr-2 text-blue-600"></i> Dados do Veículo
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="vehicleModel" class="block text-sm font-medium text-gray-700 mb-1">Modelo*</label>
+                            <input type="text" id="vehicleModel" name="vehicleModel" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="vehicleBrand" class="block text-sm font-medium text-gray-700 mb-1">Marca*</label>
+                            <input type="text" id="vehicleBrand" name="vehicleBrand" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="vehiclePlate" class="block text-sm font-medium text-gray-700 mb-1">Placa*</label>
+                            <input type="text" id="vehiclePlate" name="vehiclePlate" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" placeholder="ABC-1D23">
+                        </div>
+                        <div>
+                            <label for="vehicleYear" class="block text-sm font-medium text-gray-700 mb-1">Ano*</label>
+                            <input type="number" id="vehicleYear" name="vehicleYear" required min="1900" max="2099" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="vehicleColor" class="block text-sm font-medium text-gray-700 mb-1">Cor*</label>
+                            <input type="text" id="vehicleColor" name="vehicleColor" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="vehicleDamage" class="block text-sm font-medium text-gray-700 mb-1">Descrição do Serviço*</label>
+                            <textarea id="vehicleDamage" name="vehicleDamage" rows="3" required 
+                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Service Section -->
+                <section id="service-section" class="hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-tools mr-2 text-blue-600"></i> Dados do Serviço
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="serviceStartDate" class="block text-sm font-medium text-gray-700 mb-1">Data de Início*</label>
+                            <input type="date" id="serviceStartDate" name="serviceStartDate" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="serviceStartTime" class="block text-sm font-medium text-gray-700 mb-1">Hora de Início*</label>
+                            <input type="time" id="serviceStartTime" name="serviceStartTime" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="serviceEndDate" class="block text-sm font-medium text-gray-700 mb-1">Data de Término (prevista)</label>
+                            <input type="date" id="serviceEndDate" name="serviceEndDate" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="serviceEndTime" class="block text-sm font-medium text-gray-700 mb-1">Hora de Término (prevista)</label>
+                            <input type="time" id="serviceEndTime" name="serviceEndTime" 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="serviceValue" class="block text-sm font-medium text-gray-700 mb-1">Valor (R$)*</label>
+                            <input type="number" id="serviceValue" name="serviceValue" step="0.01" min="0" required 
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="servicePayment" class="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento*</label>
+                            <select id="servicePayment" name="servicePayment" required 
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Dinheiro">Dinheiro</option>
+                                <option value="Cartão de Crédito">Cartão de Crédito</option>
+                                <option value="Cartão de Débito">Cartão de Débito</option>
+                                <option value="PIX">PIX</option>
+                                <option value="Boleto">Boleto</option>
+                                <option value="Transferência">Transferência Bancária</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Photos Section -->
+                <section id="photos-section" class="hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-camera mr-2 text-blue-600"></i> Fotos do Veículo
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Before Photos -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-700 mb-4">Antes do Serviço</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('before1').click()">
+                                    <input type="file" id="before1" name="before1" class="hidden" accept="image/*" onchange="previewImage(this, 'beforePreview1')">
+                                    <div id="beforePreviewContainer1" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 1</p>
+                                    </div>
+                                    <img id="beforePreview1" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('before2').click()">
+                                    <input type="file" id="before2" name="before2" class="hidden" accept="image/*" onchange="previewImage(this, 'beforePreview2')">
+                                    <div id="beforePreviewContainer2" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 2</p>
+                                    </div>
+                                    <img id="beforePreview2" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <br>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('before3').click()">
+                                    <input type="file" id="before3" name="before3" class="hidden" accept="image/*" onchange="previewImage(this, 'beforePreview3')">
+                                    <div id="beforePreviewContainer3" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 3</p>
+                                    </div>
+                                    <img id="beforePreview3" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('before3').click()">
+                                    <input type="file" id="before3" name="before3" class="hidden" accept="image/*" onchange="previewImage(this, 'beforePreview3')">
+                                    <div id="beforePreviewContainer3" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 4</p>
+                                    </div>
+                                    <img id="beforePreview3" class="photo-preview w-full rounded hidden">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- After Photos -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-700 mb-4">Após o Serviço</h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('after1').click()">
+                                    <input type="file" id="after1" name="after1" class="hidden" accept="image/*" onchange="previewImage(this, 'afterPreview1')">
+                                    <div id="afterPreviewContainer1" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 1</p>
+                                    </div>
+                                    <img id="afterPreview1" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('after2').click()">
+                                    <input type="file" id="after2" name="after2" class="hidden" accept="image/*" onchange="previewImage(this, 'afterPreview2')">
+                                    <div id="afterPreviewContainer2" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 2</p>
+                                    </div>
+                                    <img id="afterPreview2" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <br>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('after3').click()">
+                                    <input type="file" id="after3" name="after3" class="hidden" accept="image/*" onchange="previewImage(this, 'afterPreview3')">
+                                    <div id="afterPreviewContainer3" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 3</p>
+                                    </div>
+                                    <img id="afterPreview3" class="photo-preview w-full rounded hidden">
+                                </div>
+                                <div class="photo-upload rounded-lg p-2 text-center cursor-pointer" onclick="document.getElementById('before3').click()">
+                                    <input type="file" id="before3" name="before3" class="hidden" accept="image/*" onchange="previewImage(this, 'beforePreview3')">
+                                    <div id="beforePreviewContainer3" class="mb-2">
+                                        <i class="fas fa-plus text-3xl text-gray-400 mb-1"></i>
+                                        <p class="text-xs text-gray-500">Foto 4</p>
+                                    </div>
+                                    <img id="beforePreview3" class="photo-preview w-full rounded hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Form Navigation -->
+                <div class="mt-10 flex justify-between">
+                    <button type="button" id="prevBtn" class="hidden px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition">
+                        <i class="fas fa-arrow-left mr-2"></i> Voltar
+                    </button>
+                    <button type="button" id="nextBtn" class="ml-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Próximo <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button type="button" id="submitBtn" class="hidden px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+                        <i class="fas fa-file-pdf mr-2"></i> Gerar PDF e Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Success Modal -->
+        <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Sucesso!</h3>
+                    <p class="text-gray-600 mb-6">O serviço foi registrado com sucesso e o PDF foi gerado.</p>
+                    <button onclick="closeModal()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        Fechar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form navigation
+        let currentSection = 1;
+        const totalSections = 4;
+        
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (validateCurrentSection()) {
+                document.getElementById(getSectionId(currentSection)).classList.add('hidden');
+                currentSection++;
+                
+                if (currentSection === totalSections) {
+                    document.getElementById('nextBtn').classList.add('hidden');
+                    document.getElementById('submitBtn').classList.remove('hidden');
+                } else {
+                    document.getElementById('nextBtn').classList.remove('hidden');
+                    document.getElementById('submitBtn').classList.add('hidden');
+                }
+                
+                document.getElementById(getSectionId(currentSection)).classList.remove('hidden');
+                document.getElementById('prevBtn').classList.remove('hidden');
+                updateProgressBar();
+            }
+        });
+        
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            document.getElementById(getSectionId(currentSection)).classList.add('hidden');
+            currentSection--;
+            
+            document.getElementById(getSectionId(currentSection)).classList.remove('hidden');
+            document.getElementById('nextBtn').classList.remove('hidden');
+            document.getElementById('submitBtn').classList.add('hidden');
+            
+            if (currentSection === 1) {
+                document.getElementById('prevBtn').classList.add('hidden');
+            }
+            
+            updateProgressBar();
+        });
+        
+        document.getElementById('submitBtn').addEventListener('click', () => {
+            if (validateCurrentSection()) {
+                // Here you would normally send data to server and generate PDF
+                // For demo purposes, we'll just show the success modal
+                document.getElementById('successModal').classList.remove('hidden');
+                
+                // Reset form for demo (in a real app, you wouldn't do this)
+                setTimeout(() => {
+                    document.getElementById('serviceForm').reset();
+                    resetPhotoPreviews();
+                    document.getElementById(getSectionId(currentSection)).classList.add('hidden');
+                    currentSection = 1;
+                    document.getElementById(getSectionId(currentSection)).classList.remove('hidden');
+                    document.getElementById('prevBtn').classList.add('hidden');
+                    document.getElementById('nextBtn').classList.remove('hidden');
+                    document.getElementById('submitBtn').classList.add('hidden');
+                    updateProgressBar();
+                }, 3000);
+            }
+        });
+        
+        function getSectionId(sectionNumber) {
+            switch(sectionNumber) {
+                case 1: return 'customer-section';
+                case 2: return 'vehicle-section';
+                case 3: return 'service-section';
+                case 4: return 'photos-section';
+                default: return 'customer-section';
+            }
+        }
+        
+        function updateProgressBar() {
+            const progressSteps = document.querySelectorAll('.bg-gray-100 div div div');
+            progressSteps.forEach((step, index) => {
+                if (index < currentSection - 1) {
+                    step.classList.remove('bg-gray-300', 'text-gray-600');
+                    step.classList.add('bg-blue-600', 'text-white');
+                } else if (index > currentSection - 1) {
+                    step.classList.add('bg-gray-300', 'text-gray-600');
+                    step.classList.remove('bg-blue-600', 'text-white');
+                }
+            });
+        }
+        
+        function validateCurrentSection() {
+            let isValid = true;
+            const currentSectionElement = document.getElementById(getSectionId(currentSection));
+            
+            // Check all required fields in current section
+            const requiredInputs = currentSectionElement.querySelectorAll('[required]');
+            requiredInputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                    
+                    // Remove red border when user starts typing
+                    input.addEventListener('input', () => {
+                        if (input.value.trim()) {
+                            input.classList.remove('border-red-500');
+                        }
+                    });
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                alert('Por favor, preencha todos os campos obrigatórios marcados com *');
+            }
+            
+            return isValid;
+        }
+        
+        function previewImage(input, previewId) {
+            const file = input.files[0];
+            const preview = document.getElementById(previewId);
+            const previewContainer = document.getElementById(previewId + 'Container');
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    previewContainer.classList.add('hidden');
+                }
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function resetPhotoPreviews() {
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`beforePreview${i}`).classList.add('hidden');
+                document.getElementById(`beforePreview${i}Container`).classList.remove('hidden');
+                document.getElementById(`afterPreview${i}`).classList.add('hidden');
+                document.getElementById(`afterPreview${i}Container`).classList.remove('hidden');
+                document.getElementById(`before${i}`).value = '';
+                document.getElementById(`after${i}`).value = '';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+        
+        // Format CPF input
+        document.getElementById('customerCPF').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 3 && value.length <= 6) {
+                value = value.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+            } else if (value.length > 6 && value.length <= 9) {
+                value = value.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+            } else if (value.length > 9) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Format phone input
+        document.getElementById('customerPhone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 0 && value.length <= 2) {
+                value = `(${value}`;
+            } else if (value.length > 2 && value.length <= 7) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2)}`;
+            } else if (value.length > 7 && value.length <= 11) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7)}`;
+            } else if (value.length > 11) {
+                value = `(${value.substring(0, 2)}) ${value.substring(2, 7)}-${value.substring(7, 11)}`;
+            }
+            
+            e.target.value = value;
+        });
+        
+        // Format plate input
+        document.getElementById('vehiclePlate').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            
+            if (value.length > 3) {
+                value = `${value.substring(0, 3)}-${value.substring(3)}`;
+            }
+            
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
